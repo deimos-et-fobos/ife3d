@@ -98,4 +98,4 @@ clean_:
 wipe: clean
 		rm -f $(PROGRAM) *% *~
 
-include $(SLEPC_DIR)/conf/slepc_common
+include $(SLEPC_COMMON)

@@ -18,7 +18,7 @@ C
       dimension mmp(3,maxelem),mmsur(3,maxelem),NR(maxgroups),nn(4),
      &     nnp(6,maxelem),zp(2,maxnod),nrvp(3,maxelem),nrap(3,maxelem),
      &     nrep(maxelem),nref(maxnod),smp(maxgroups),thin(maxgroups),
-     &     smpp(maxelem),thinp(maxelem),
+     &     smpp(maxelem),thinp(maxelem),nsd(maxgroups),nsdp(maxelem),
      &     je(3*maxnod),iet(maxnod),jet(3*maxnod),jee(3*maxelem)
       CHARACTER*80 FILESUR,FILEVWM,FILEBO,FILEOUT,dummy 
       integer el_gr(maxgroups),sur_gr(maxgroups),el_ngrp,sur_ngrp,
@@ -127,7 +127,7 @@ c
             nelsur=nelsur+sur_gr(i0)
  1100 continue  
 
-      read(4,*,end=200) dummy
+      call searstr(4,'BC_ELEMENT_GROUPS')
       do 1200 i=1,sur_ngrp
         read(4,*,end=200) NG,NR(i)
  1200 continue   
@@ -265,11 +265,12 @@ c
  5000 continue 
  
       iel=1
-      read(4,*,end=200)dummy
+      call searstr(4,'ELEMENT_GROUPS')
       do 3010 i=1,el_ngrp
-        read(4,*,end=200) NG,NR(i),dirp(i),smp(i),thin(i)
+        read(4,*,end=200) NG,NR(i),nsd(i),dirp(i),smp(i),thin(i)
         do 3020 i0=1,el_gr(i)
           if (NR(i).NE.0) nrep(iel)=NR(i)
+          nsdp(iel)=nsd(i)
           dirps(iel)=dirp(i)
           smpp(iel)=smp(i)
           thinp(iel)=thin(i)
@@ -314,21 +315,28 @@ c
  4030 continue
       write(12,*)
    
+      write(12,'(a)') ' NRE | NSD | DIRP(1=x,2=y,3=z) | SMP | THICKNESS'
       write(12,'(a)') '*NRE'  
-      write(12,*)  (nrep(i),i=1,nelp) 
+      do 4031 i=1,nelp
+        write(12,*)  nrep(i),nsdp(i),dirps(i),smpp(i),thinp(i) 
+ 4031 continue
       write(12,*)
-      
-      write(12,'(a)') '*DIRP'  
-      write(12,*)  (dirps(i),i=1,nelp) 
-      write(12,*)
-      
-      write(12,'(a)') '*SMP'  
-      write(12,*)  (smpp(i),i=1,nelp) 
-      write(12,*)
-      
-      write(12,'(a)') '*THIN'  
-      write(12,*)  (thinp(i),i=1,nelp)  
-      write(12,*)
+
+!      write(12,'(a)') '*NRE'  
+!      write(12,*)  (nrep(i),i=1,nelp) 
+!      write(12,*)
+!      
+!      write(12,'(a)') '*DIRP'  
+!      write(12,*)  (dirps(i),i=1,nelp) 
+!      write(12,*)
+!      
+!      write(12,'(a)') '*SMP'  
+!      write(12,*)  (smpp(i),i=1,nelp) 
+!      write(12,*)
+!      
+!      write(12,'(a)') '*THIN'  
+!      write(12,*)  (thinp(i),i=1,nelp)  
+!      write(12,*)
       
       write(12,'(a)') '*NRV'    
       do 4040 i=1,nelp
@@ -342,9 +350,9 @@ c
  4050 continue
       write(12,*)
          
-      write(12,'(a)') '*NSD'   !Numero de Subdominios
-      write(12,*)  (' 1 ',i=1,nelp)
-      write(12,*)
+!      write(12,'(a)') '*NSD'   !Numero de Subdominios
+!      write(12,*)  (' 1 ',i=1,nelp)
+!      write(12,*)
 
       write(12,'(a)') '*END' ! Final
 
@@ -372,12 +380,3 @@ c
  200  write(*,*) "Error al leer los limites de las referencias"
       STOP
       end
-
-
-
-
-
-
-
-
-

@@ -50,19 +50,24 @@
          call searstr(10, 'NODES_INCIDENCE')
          read(10,*,err=3020,end=3020) (( nnp(i,k),i=1,6),k=1,nelp)
          call searstr(10, 'NRE')
-         read(10,*,err=3020,end=3020) (nrep(k),k=1,nelp)
-         call searstr(10, 'DIRP')
-         read(10,*,err=3020,end=3020) (dirp(k),k=1,nelp)
-         call searstr(10, 'SMP')
-         read(10,*,err=3020,end=3020) (smp(k),k=1,nelp)
-         call searstr(10, 'THIN')
-         read(10,*,err=3020,end=3020) (thin(k),k=1,nelp)
+         do 1001 k=1,nelp
+           read(10,*,err=3020,end=3020) nrep(k),nsdp(k),dirp(k),
+     &                                  smp(k),thin(k)
+ 1001    continue
+!         call searstr(10, 'NRE')
+!         read(10,*,err=3020,end=3020) (nrep(k),k=1,nelp)
+!         call searstr(10, 'NSD')
+!         read(10,*,err=3020,end=3020) ( nsdp(k),k=1,nelp)
+!         call searstr(10, 'DIRP')
+!         read(10,*,err=3020,end=3020) (dirp(k),k=1,nelp)
+!         call searstr(10, 'SMP')
+!         read(10,*,err=3020,end=3020) (smp(k),k=1,nelp)
+!         call searstr(10, 'THIN')
+!         read(10,*,err=3020,end=3020) (thin(k),k=1,nelp)
          call searstr(10, 'NRA')
          read(10,*,err=3020,end=3020) ((nrap(i,k),i=1,3),k=1,nelp)
          call searstr(10, 'NRV')
          read(10,*,err=3020,end=3020) ((nrvp(i,k),i=1,3),k=1,nelp)
-         call searstr(10, 'NSD')
-         read(10,*,err=3020,end=3020) ( nsdp(k),k=1,nelp)
          close(10)
       endif   
 

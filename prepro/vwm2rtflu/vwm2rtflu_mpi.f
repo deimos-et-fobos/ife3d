@@ -126,7 +126,7 @@ c
             nelsur=nelsur+sur_gr(i0)
  1030 continue  
 
-      read(3,*,end=200) dummy
+      call searstr(3,'BC_ELEMENT_GROUPS')
       do 1040 i=1,sur_ngrs
             read(3,*,end=200) NG, NR(i) ! nro de referencia y grupo
  1040 continue   

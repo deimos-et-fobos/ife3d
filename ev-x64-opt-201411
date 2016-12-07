@@ -19,6 +19,7 @@ fi
 export P_ARCH=x64-opt
 export PETSC_DIR=/usr/local/petsc-${VERSION}O
 export SLEPC_DIR=/usr/local/slepc-${VERSION}O
+export SLEPC_COMMON=${SLEPC_DIR}/conf/slepc_common
 #
 export PAR_IFE_DIR=${HOME}/ife3d/par_ife3D
 #

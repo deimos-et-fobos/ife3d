@@ -26,10 +26,6 @@ C
      &        4,1,7,6,4,1,6,7,       5,1,5,5,1,5,1,1,
      &        6,1,1,6,6,1,6,1,       7,1,7,1,7,1,1,7/
 
-      write(*,*)"Starting vwm2rtpla ..."
-      write(*,*)" Valid BC:"
-      write(*,*)"  0: Libre"
-      
       call MPI_INIT (mpierr)
       call MPI_COMM_SIZE (MPI_COMM_WORLD, size, mpierr)
       call MPI_COMM_RANK (MPI_COMM_WORLD, rank, mpierr)
@@ -122,7 +118,7 @@ c
         nelsur=nelsur+sur_gr(i0)
  1100 continue  
 
-      read(4,*,end=200) 
+      call searstr(4,'BC_ELEMENT_GROUPS')
       do 1200 i=1,sur_ngrs
         read(4,*,end=200) NG,NR(i)
  1200 continue
